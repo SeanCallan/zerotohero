@@ -1,0 +1,7 @@
+{
+    "schemaType": "LAUNCHER",
+    "id": "zerotohero-launcher",
+    "displayName": "Zero to hero!",
+    "description": "zero to hero NR1 workshop",
+    "rootNerdletId": "zerotohero-nerdlet"
+}
