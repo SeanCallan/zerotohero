@@ -1,6 +1,7 @@
 import React from 'react';
 import { Grid, GridItem, HeadingText, PieChart, LineChart, BillboardChart, Icon, PlatformStateContext } from 'nr1';
 import Z2HIcon from './icon.png';
+import ChartRow from '../../components/index'
 
 // https://docs.newrelic.com/docs/new-relic-programmable-platform-introduction
 
@@ -81,6 +82,7 @@ export default class ZerotoheroNerdletNerdlet extends React.Component {
                             </HeadingText>
                         </GridItem>
                     </Grid>
+                    <ChartRow example="This is some example text" exampleStr="This should be a string" exampleNum={1}/>
                     {rows}
                 </>
             }}
