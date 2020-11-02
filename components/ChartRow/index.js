@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Grid, GridItem, HeadingText, PieChart, LineChart, BillboardChart, Icon } from 'nr1'
-import SimplePie from './SimplePie.js'
+import { Grid, GridItem, HeadingText, LineChart, BillboardChart, Icon } from 'nr1';
+import SimplePie from './SimplePie.js';
 
 export default class ChartRow extends Component {
     static propTypes = {
@@ -30,7 +30,7 @@ export default class ChartRow extends Component {
                 />
             </GridItem>
             <GridItem columnSpan={5}>
-                <SimplePie />
+            <SimplePie accountId={accountId} likeClause={row.likeClause} sinceClause={sinceClause}/>
             </GridItem>
             <GridItem columnSpan={5}>
                 <LineChart

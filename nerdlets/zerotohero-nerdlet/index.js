@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, GridItem, HeadingText, Icon, PlatformStateContext } from 'nr1';
 import Z2HIcon from './icon.png';
-import ChartRow from '../../components/ChartRow/index'
+import ChartRow from '../../components/ChartRow/index';
 
 // https://docs.newrelic.com/docs/new-relic-programmable-platform-introduction
 
