@@ -1,7 +1,7 @@
 import React from 'react';
-import { Grid, GridItem, HeadingText, PieChart, LineChart, BillboardChart, Icon, PlatformStateContext } from 'nr1';
+import { Grid, GridItem, HeadingText, Icon, PlatformStateContext } from 'nr1';
 import Z2HIcon from './icon.png';
-import ChartRow from '../../components/index'
+import ChartRow from '../../components/ChartRow/index'
 
 // https://docs.newrelic.com/docs/new-relic-programmable-platform-introduction
 
@@ -40,34 +40,7 @@ export default class ZerotoheroNerdletNerdlet extends React.Component {
                 }
                 const rows = appConfig.map((row, index)=>{
                     console.log(`${index}: ${row.name} - ${row.likeClause}`)
-                    return <Grid key={index} className="ChartRow">
-                    <GridItem columnSpan={2}>
-                        <HeadingText tagType={HeadingText.TAG_TYPE.H2}>
-                        <Icon sizeType={Icon.SIZE_TYPE.LARGE} type={row.icon} /> {row.name}
-                        </HeadingText>
-                        <BillboardChart
-                            accountId={accountId}
-                            query={`select count(*) as 'Transactions' FROM Transaction where appName like '${row.likeClause}' ${sinceClause}`}
-                            fullWidth
-                        />
-                    </GridItem>
-                    <GridItem columnSpan={5}>
-                        <PieChart
-                            accountId={accountId}
-                            query={`select count(*) as 'Transactions' FROM Transaction where appName like '${row.likeClause}' facet appName limit 100 ${sinceClause}`}
-                            fullWidth
-                            fullHeight
-                        />
-                    </GridItem>
-                    <GridItem columnSpan={5}>
-                        <LineChart
-                            accountId={accountId}
-                            query={`select count(*) as 'Transactions' FROM Transaction where appName like '${row.likeClause}' facet appName limit max timeseries ${sinceClause}`}
-                            fullWidth
-                            fullHeight
-                        />
-                    </GridItem>
-                </Grid>
+                    return <ChartRow key={index} row={row} accountId={accountId} sinceClause={sinceClause} uniqueId={index}/>
                 })
                 console.log("rows", rows)
                 return <>
@@ -82,7 +55,6 @@ export default class ZerotoheroNerdletNerdlet extends React.Component {
                             </HeadingText>
                         </GridItem>
                     </Grid>
-                    <ChartRow example="This is some example text" exampleStr="This should be a string" exampleNum={1}/>
                     {rows}
                 </>
             }}
