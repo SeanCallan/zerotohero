@@ -1,4 +1,4 @@
-# @REPO@
+# @ZeroToHero@
 
 ## Getting started
 
