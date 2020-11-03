@@ -16,6 +16,13 @@ export default class MultiChart extends Component {
     async componentDidMount() {
         this.loadData()
     }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.sinceClause!==this.props.sinceClause){
+            this.loadData()
+        }
+    }
+    
     
     loadData() {
         const { accountId, sinceClause } = this.props
@@ -37,26 +44,35 @@ export default class MultiChart extends Component {
         console.log(q)
         let formattedData = []
         q.then(results => {
-            formattedData.push( results.data.actor.account.server.results.map((datapoint) => {
+
+            const dataFormatter = (data, fieldName, id, name, color) =>{
                 return {
-                    x: datapoint.endTimeSeconds*1000,
-                    y: datapoint.transactions
+                    metadata: {
+                        id: id,
+                        name: name,
+                        color: color,
+                        viz: 'main',
+                        units_data: {
+                            x: 'TIMESTAMP',
+                            y: 'TRANSACTIONS',
+                        }
+                    },
+                    data: data.results.map((datapoint)=>{ return { x: datapoint.endTimeSeconds*1000, y:datapoint[fieldName] }})
                 }
-            }))
-            formattedData.push( results.data.actor.account.browser.results.map((datapoint) => {
-                return {
-                    x: datapoint.endTimeSeconds*1000,
-                    y: datapoint.pageViews
-                }
-            }))
-            this.setState({ data: formattedData })
+            }
+        
+            let formattedData=[]
+            formattedData.push(dataFormatter(results.data.actor.account.server,'transactions','series1','Server App', '#a35ebf'))
+            formattedData.push(dataFormatter(results.data.actor.account.browser,'pageViews','series2','Browser App', '#ff0000'))
+            this.setState({data: formattedData})
+        
         }).catch((error) => { console.log(error); })
     }
     render() {
         const { data } = this.state
         let returnVal = <Spinner />
         if(data) {
-            returnVal=<div>Multichart goes here</div>
+            returnVal=<LineChart data={data} fullWidth />
         }
         return returnVal
     }
