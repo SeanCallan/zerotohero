@@ -18,17 +18,17 @@ export default class ZerotoheroNerdletNerdlet extends React.Component {
             {
                 name: "Test Data",
                 icon: Icon.TYPE.PROFILES__EVENTS__LIKE,
-                likeClause: "%<APPLICATION NAME PATTERN>%"
+                likeClause: "%<APPLICATION NAME/PATTERN>%"
             },
             {
                 name: "Proxies",
                 icon: Icon.TYPE.HARDWARE_AND_SOFTWARE__SOFTWARE__DECISIONS,
-                likeClause: "%Proxy%"
+                likeClause: "%<PROXY NAME/PATTERN>%"
             },
             {
                 name: "Services",
                 icon: Icon.TYPE.HARDWARE_AND_SOFTWARE__SOFTWARE__CORRELATION_REASONING,
-                likeClause: "%Service"
+                likeClause: "%<SERVICE NAME/PATTERN>%"
             }
         ]
 
