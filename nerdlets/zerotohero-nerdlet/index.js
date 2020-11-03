@@ -1,11 +1,16 @@
+
 import React from 'react';
-import { Grid, GridItem, HeadingText, Icon, PlatformStateContext } from 'nr1';
+import { Grid, GridItem, HeadingText, Icon, PlatformStateContext, Checkbox } from 'nr1';
 import Z2HIcon from './icon.png';
 import ChartRow from '../../components/ChartRow/index';
 
 // https://docs.newrelic.com/docs/new-relic-programmable-platform-introduction
 
 export default class ZerotoheroNerdletNerdlet extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = { slowOnly: true }
+    }
     render() {
         const accountId=1951995
         const appName="My Application (Ruby)"
@@ -26,10 +31,10 @@ export default class ZerotoheroNerdletNerdlet extends React.Component {
                 likeClause: "%Service"
             }
         ]
+
         return <PlatformStateContext.Consumer>
             {(platformUrlState) => {
-                console.debug("platformUrlState",platformUrlState)
-                console.log("timeRange",platformUrlState.timeRange)
+                const {slowOnly} = this.state
                 let sinceClause = ""
                 if(platformUrlState && platformUrlState.timeRange) {
                     if(platformUrlState.timeRange.duration) {
@@ -40,19 +45,26 @@ export default class ZerotoheroNerdletNerdlet extends React.Component {
                 }
                 const rows = appConfig.map((row, index)=>{
                     console.log(`${index}: ${row.name} - ${row.likeClause}`)
-                    return <ChartRow key={index} row={row} accountId={accountId} sinceClause={sinceClause} uniqueId={index}/>
+                    return <ChartRow key={index} row={row} accountId={accountId} sinceClause={sinceClause} uniqueId={index} duration={slowOnly ? 0.5 : 0}/>
                 })
-                console.log("rows", rows)
+                
+                const slowToggle = (event) => {
+                    this.setState({ slowOnly: event.target.checked})
+                }
+
                 return <>
                     <Grid>
                         <GridItem columnSpan={1} className="AppIcon"><img src={Z2HIcon} alt="Zero to Hero" height="80"/></GridItem>
-                        <GridItem columnSpan={11} >
+                        <GridItem columnSpan={8} >
                             <HeadingText
                                 tagType={HeadingText.TAG_TYPE.H1}
                                 className="MainHeading"
                             >
                                 Zero to Hero!
                             </HeadingText>
+                        </GridItem>
+                        <GridItem columnSpan={3}>
+                            <Checkbox onChange={slowToggle} defaultChecked={slowOnly} label='Slow transactions only' />
                         </GridItem>
                     </Grid>
                     {rows}

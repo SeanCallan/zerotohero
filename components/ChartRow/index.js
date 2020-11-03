@@ -7,7 +7,8 @@ export default class ChartRow extends Component {
     static propTypes = {
         row: PropTypes.object.isRequired,
         accountId: PropTypes.number.isRequired,
-        sinceClause: PropTypes.string
+        sinceClause: PropTypes.string,
+        duration: PropTypes.number.isRequired
     }
 
     constructor(props) {
@@ -16,7 +17,7 @@ export default class ChartRow extends Component {
     }
 
     render() {
-        const {row, accountId, sinceClause} = this.props
+        const {row, accountId, sinceClause, duration} = this.props
 
         return <Grid className="ChartRow">
             <GridItem columnSpan={2}>
@@ -25,17 +26,17 @@ export default class ChartRow extends Component {
                 </HeadingText>
                 <BillboardChart
                     accountId={accountId}
-                    query={`select count(*) as 'Transactions' FROM Transaction where appName like '${row.likeClause}' ${sinceClause}`}
+                    query={`select count(*) as 'Transactions' FROM Transaction where appName like '${row.likeClause}' ${sinceClause} where duration >= ${duration}`}
                     fullWidth
                 />
             </GridItem>
             <GridItem columnSpan={5}>
-            <SimplePie accountId={accountId} likeClause={row.likeClause} sinceClause={sinceClause}/>
+            <SimplePie accountId={accountId} likeClause={row.likeClause} sinceClause={sinceClause} duration={duration}/>
             </GridItem>
             <GridItem columnSpan={5}>
                 <LineChart
                     accountId={accountId}
-                    query={`select count(*) as 'Transactions' FROM Transaction where appName like '${row.likeClause}' facet appName limit max timeseries ${sinceClause}`}
+                    query={`select count(*) as 'Transactions' FROM Transaction where appName like '${row.likeClause}' facet appName limit max timeseries ${sinceClause} where duration >= ${duration}`}
                     fullWidth
                     fullHeight
                 />

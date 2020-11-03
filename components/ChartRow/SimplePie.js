@@ -11,9 +11,16 @@ export default class SimplePie extends Component {
     async componentDidMount() {
         this.loadData()
     }
+
+    componentDidUpdate(prevProps){
+        if( prevProps.sinceClause !== this.props.sinceClause ){
+            this.setState({ data: null })
+            this.loadData()
+        }
+    }
   
     loadData() {
-        const { accountId, likeClause, sinceClause } = this.props
+        const { accountId, likeClause, sinceClause, duration } = this.props
 
         const variables = {
             id: accountId
