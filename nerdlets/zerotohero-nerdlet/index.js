@@ -13,12 +13,12 @@ export default class ZerotoheroNerdletNerdlet extends React.Component {
         this.state = { slowOnly: true }
     }
     render() {
-        const accountId=1951995
+        const accountId="<ACCOUNT ID>"
         const appConfig=[
             {
                 name: "Test Data",
                 icon: Icon.TYPE.PROFILES__EVENTS__LIKE,
-                likeClause: "%test-data%"
+                likeClause: "%<APPLICATION NAME PATTERN>%"
             },
             {
                 name: "Proxies",
