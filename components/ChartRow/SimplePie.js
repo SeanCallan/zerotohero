@@ -32,7 +32,7 @@ export default class SimplePie extends Component {
             query($id: Int!) {
                 actor {
                     account(id: $id) {
-                        appshare: nrql(query: "select count(*) as 'Transactions' FROM Transaction where appName like '${likeClause}' facet appName limit max ${sinceClause} where duration >= ${duration}") {results}
+                        appshare: nrql(query: "SELECT count(*) as 'Transactions' FROM Transaction WHERE appName LIKE '${likeClause}' FACET appName LIMIT max ${sinceClause} WHERE duration >= ${duration}") {results}
                     }
                 }
             }

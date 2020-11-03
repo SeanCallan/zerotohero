@@ -26,7 +26,7 @@ export default class ChartRow extends Component {
                 </HeadingText>
                 <BillboardChart
                     accountId={accountId}
-                    query={`select count(*) as 'Transactions' FROM Transaction where appName like '${row.likeClause}' ${sinceClause} where duration >= ${duration}`}
+                    query={`SELECT count(*) as 'Transactions' FROM Transaction WHERE appName LIKE '${row.likeClause}' ${sinceClause} WHERE duration >= ${duration}`}
                     fullWidth
                 />
             </GridItem>
@@ -36,7 +36,7 @@ export default class ChartRow extends Component {
             <GridItem columnSpan={5}>
                 <LineChart
                     accountId={accountId}
-                    query={`select count(*) as 'Transactions' FROM Transaction where appName like '${row.likeClause}' facet appName limit max timeseries ${sinceClause} where duration >= ${duration}`}
+                    query={`SELECT count(*) as 'Transactions' FROM Transaction WHERE appName LIKE '${row.likeClause}' facet appName LIMIT MAX TIMESERIES ${sinceClause} WHERE duration >= ${duration}`}
                     fullWidth
                     fullHeight
                 />
