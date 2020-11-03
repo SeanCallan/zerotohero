@@ -3,6 +3,7 @@ import React from 'react';
 import { Grid, GridItem, HeadingText, Icon, PlatformStateContext, Checkbox } from 'nr1';
 import Z2HIcon from './icon.png';
 import ChartRow from '../../components/ChartRow/index';
+import MultiChart from '../../components/MultiChart';
 
 // https://docs.newrelic.com/docs/new-relic-programmable-platform-introduction
 
@@ -13,12 +14,11 @@ export default class ZerotoheroNerdletNerdlet extends React.Component {
     }
     render() {
         const accountId=1951995
-        const appName="My Application (Ruby)"
         const appConfig=[
             {
-                name: "My Application (Ruby)",
+                name: "Test Data",
                 icon: Icon.TYPE.PROFILES__EVENTS__LIKE,
-                likeClause: "%My Application%"
+                likeClause: "%test-data%"
             },
             {
                 name: "Proxies",
@@ -65,6 +65,11 @@ export default class ZerotoheroNerdletNerdlet extends React.Component {
                         </GridItem>
                         <GridItem columnSpan={3}>
                             <Checkbox onChange={slowToggle} defaultChecked={slowOnly} label='Slow transactions only' />
+                        </GridItem>
+                    </Grid>
+                    <Grid>
+                        <GridItem columnSpan={12}>
+                            <MultiChart accountId={accountId} sinceClause={sinceClause}/>
                         </GridItem>
                     </Grid>
                     {rows}
