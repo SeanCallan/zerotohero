@@ -17,7 +17,12 @@ export default class MultiChart extends Component {
     //loads data into chart and specifies auto-update interval
     async componentDidMount() {
         this.loadData()
-        this.autoRefresh = setInterval(() => this.loadData(), 1000*60*1)
+        this.autoRefresh = setInterval(() => this.loadData(), 1000*60*1) //AUTO-UPDATE 1 minute interval
+    }
+
+    //clears data off chart at set intervals so new and current datta can populate it
+    componentWillUnmount() {
+        clearInterval(this.autoRefresh);
     }
 
     //ensures data is matches time picker and is current
@@ -38,8 +43,8 @@ export default class MultiChart extends Component {
             query($id: Int!) {
                 actor {
                     account(id: $id) {
-                        server: nrql(query: "SELECT count(*) as 'transactions' from Transaction where appName='wordpree-test-data' timeseries ${sinceClause}") {results}
-                        browser: nrql(query: "select count(*) as 'pageViews' FROM PageView where appName='wordpree-test-data' timeseries ${sinceClause}") {results}
+                        server: nrql(query: "SELECT count(*) as 'transactions' FROM Transaction WHERE appName='wordpree-test-data' TIMESERIES ${sinceClause}") {results}
+                        browser: nrql(query: "SELECT count(*) as 'pageViews' FROM PageView WHERE appName='wordpree-test-data' TIMESERIES ${sinceClause}") {results}
                     }
                 }
             }

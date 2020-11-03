@@ -67,7 +67,7 @@ export default class ZerotoheroNerdletNerdlet extends React.Component {
                             <Checkbox onChange={slowToggle} defaultChecked={slowOnly} label='Slow transactions only' />
                         </GridItem>
                     </Grid>
-                    <Grid>
+                    <Grid className="MultiChartRow">
                         <GridItem columnSpan={12}>
                             <MultiChart accountId={accountId} sinceClause={sinceClause}/>
                         </GridItem>
