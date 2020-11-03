@@ -1,22 +1,18 @@
-# @ZeroToHero@
+# ZeroToHero
 
 ## Getting started
+
+Edit the following values in zerotohero/index.js:
+line 16 -  accountId, set to your account id (also remove quotations)
+line 21 - set like clause to the name/pattern of the application(s) you would like to monitor
 
 Run the following scripts:
 
 ```
 npm install
 npm start
+nr1 nerdpack:serve
 ```
 
-Visit https://one.newrelic.com/?nerdpacks=local and :sparkles:
+Visit https://one.newrelic.com/?nerdpacks=local and the zero to hero application will display
 
-## Creating new artifacts
-
-If you want to create new artifacts run the following command:
-
-```
-nr1 create
-```
-
-> Example: `nr1 create --type nerdlet --name my-nerdlet`.
