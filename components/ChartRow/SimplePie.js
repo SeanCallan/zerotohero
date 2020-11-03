@@ -13,7 +13,9 @@ export default class SimplePie extends Component {
     }
 
     componentDidUpdate(prevProps){
-        if( prevProps.sinceClause !== this.props.sinceClause ){
+        if (prevProps.sinceClause !== this.props.sinceClause || 
+            prevProps.duration !== this.props.duration
+            ){
             this.setState({ data: null })
             this.loadData()
         }
@@ -30,7 +32,7 @@ export default class SimplePie extends Component {
             query($id: Int!) {
                 actor {
                     account(id: $id) {
-                        appshare: nrql(query: "select count(*) as 'Transactions' FROM Transaction where appName like '${likeClause}' facet appName limit max ${sinceClause}") {results}
+                        appshare: nrql(query: "select count(*) as 'Transactions' FROM Transaction where appName like '${likeClause}' facet appName limit max ${sinceClause} where duration >= ${duration}") {results}
                     }
                 }
             }
@@ -38,8 +40,12 @@ export default class SimplePie extends Component {
 
         const q = NerdGraphQuery.query({ query: query, variables: variables });
         q.then(results => {
-            const formattedData=results.data.actor.account.appshare.results.map((item, idx)=>{ return { y: item.Transactions, label: `${item.appName}: ${Number(item.Transactions/1024).toFixed(2)}k` } })
-            console.log("formattedData",formattedData)
+            const formattedData=results.data.actor.account.appshare.results.map((item, idx)=>{ 
+                return { 
+                    y: item.Transactions, 
+                    label: `${item.appName}: ${Number(item.Transactions/1024).toFixed(2)}k` 
+                } 
+            })
             this.setState({data: formattedData})
         }).catch((error) => { console.log(error); })
     }
@@ -48,7 +54,7 @@ export default class SimplePie extends Component {
         let returnVal = <Spinner />
         if(data) {
             returnVal=<VictoryPie 
-            height={300} 
+            height={250} 
             colorScale="qualitative" 
             data={data} 
             padding={10}
